@@ -14,30 +14,13 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Document page = getPage();
+        com.rusu.Elements elements = new com.rusu.Elements();
 
-        getDate();
+        Document page = elements.getPage();
 
-        Element formCurrency = page.select("form[class = exchange-rates-ajax-form]").first();
-        Elements allCurrency = formCurrency.select("li");
-//        Elements currency = allCurrency.select("span[class = currency]");
-//        Elements value = allCurrency.select("span[class^=rate]");
+        elements.getDate();
 
-        for (Element value : allCurrency) {
-//            System.out.println(value.select("span[class = currency]").text() + "        " + value.select("span[class^=rate]").text());
-            System.out.printf("%s%13s\n", value.select("span[class = currency]").text(), value.select("span[class^=rate]").text());
-        }
+        elements.getElements();
     }
 
-    private static Document getPage() throws IOException {
-        String url = "https://bnm.md/";
-        Document pageDocument = Jsoup.parse(new URL(url), 10000);
-        return pageDocument;
-    }
-
-    private static void getDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        System.out.printf("%13s\n", dateFormat.format(date));
-    }
 }
