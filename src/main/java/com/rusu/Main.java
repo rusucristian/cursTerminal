@@ -2,6 +2,8 @@ package com.rusu;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -16,8 +18,15 @@ public class Main {
 
         getDate();
 
+        Element formCurrency = page.select("form[class = exchange-rates-ajax-form]").first();
+        Elements allCurrency = formCurrency.select("li");
+//        Elements currency = allCurrency.select("span[class = currency]");
+//        Elements value = allCurrency.select("span[class^=rate]");
 
-
+        for (Element value : allCurrency) {
+//            System.out.println(value.select("span[class = currency]").text() + "        " + value.select("span[class^=rate]").text());
+            System.out.printf("%s%13s\n", value.select("span[class = currency]").text(), value.select("span[class^=rate]").text());
+        }
     }
 
     private static Document getPage() throws IOException {
